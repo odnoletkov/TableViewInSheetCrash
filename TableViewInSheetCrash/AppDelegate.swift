@@ -8,17 +8,19 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         let controller = UIViewController()
         window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = controller
+        window!.rootViewController = UINavigationController(rootViewController: controller)
         window!.makeKeyAndVisible()
 
-        let tableViewController = TableViewController(style: .insetGrouped)
-        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-        snapshot.appendSections([0])
-        snapshot.appendItems((0..<20).map { String ($0 )})
-        tableViewController.dataSource.applySnapshotUsingReloadData(snapshot)
-        let navigationController = UINavigationController(rootViewController: tableViewController)
-        navigationController.sheetPresentationController?.detents = [.medium(), .large()]
-        controller.present(navigationController, animated: true)
+        controller.navigationItem.rightBarButtonItem = .init(systemItem: .add, primaryAction: .init { _ in
+            let tableViewController = TableViewController(style: .insetGrouped)
+            var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+            snapshot.appendSections([0])
+            snapshot.appendItems((0..<20).map { String ($0 )})
+            tableViewController.dataSource.applySnapshotUsingReloadData(snapshot)
+            let navigationController = UINavigationController(rootViewController: tableViewController)
+            navigationController.sheetPresentationController?.detents = [.medium(), .large()]
+            controller.present(navigationController, animated: true)
+        })
 
         return true
     }
