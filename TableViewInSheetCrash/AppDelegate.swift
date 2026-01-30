@@ -30,6 +30,7 @@ class TableViewController: UITableViewController {
     lazy var dataSource = UITableViewDiffableDataSource<Int, String>(tableView: tableView) { tableView, indexPath, itemIdentifier in
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.backgroundConfiguration = nil
         return cell
     }
 }
